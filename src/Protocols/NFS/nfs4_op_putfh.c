@@ -141,6 +141,7 @@ static int nfs4_mds_putfh(compound_data_t *data)
 
 	/* Find any existing export by the "id" from the handle,
 	 * before releasing the old export (to prevent thrashing).
+	 * get export_id from fhandle4
 	 */
 	exporting = get_gsh_export(ntohs(v4_handle->id.exports));
 

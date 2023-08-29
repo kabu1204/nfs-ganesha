@@ -2271,6 +2271,9 @@ static int build_default_root(struct config_error_type *err_type)
 
 	/* Initialize req_ctx with the export reasonably constructed using the
 	 * reference provided above by alloc_export().
+	 * 
+	 * After this, threadlocal op_ctx will be set to &op_context.
+	 * And op_ctx->fsal_export is NULL.
 	 */
 	init_op_context_simple(&op_context, export, NULL);
 

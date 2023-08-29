@@ -1910,15 +1910,15 @@ mdcache_entry_t *alloc_cache_entry(void)
 }
 
 /**
- * @brief Re-use or allocate an entry
+ * @brief Re-use or **allocate** an entry
  *
  * This function repurposes a resident entry in the LRU system if the system is
  * above the high-water mark, and allocates a new one otherwise.  On success,
  * this function always returns an entry with two references (one for the
  * sentinel, one to allow the caller's use.)
  *
- * The caller MUST call mdcache_lru_insert when the entry is sufficiently
- * constructed.
+ * The caller **MUST call mdcache_lru_insert when the entry is sufficiently
+ * constructed.**
  *
  * @return a usable entry or NULL if unexport is in progress.
  */
@@ -1945,6 +1945,8 @@ mdcache_entry_t *mdcache_lru_get(struct fsal_obj_handle *sub_handle)
 	nentry->lru.refcnt = 2;
 	nentry->lru.cf = 0;
 	nentry->lru.lane = lru_lane_of(nentry);
+	// here we set the sub_handle.
+	// TODO: where does the sub_handle comes from?
 	nentry->sub_handle = sub_handle;
 
 #ifdef USE_LTTNG

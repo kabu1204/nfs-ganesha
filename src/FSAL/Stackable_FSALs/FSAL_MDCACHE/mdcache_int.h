@@ -393,6 +393,9 @@ struct dir_chunk {
 #define DIR_ENTRY_FLAG_DELETED  0x0001
 #define DIR_ENTRY_SORTED        0x0004
 
+/*
+	Holding information about the key of a dir entry.
+*/
 typedef struct mdcache_dir_entry__ {
 	/** This dirent is part of a chunk */
 	struct glist_head chunk_list;

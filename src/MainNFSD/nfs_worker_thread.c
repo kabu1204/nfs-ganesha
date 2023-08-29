@@ -1155,6 +1155,9 @@ retry_after_drc_suspend:
 				goto req_error;
 			}
 
+			/*
+				ctx_export is set here
+			*/
 			set_op_context_export(get_gsh_export(exportid));
 
 			if (op_ctx->ctx_export == NULL) {
@@ -1495,7 +1498,10 @@ retry_after_drc_suspend:
 			   (op_ctx->ctx_export != NULL
 			    ? op_ctx->ctx_export->export_id : -1));
 #endif
-
+		
+		/*
+			do the actual work here
+		*/
 		rc = reqdesc->service_function(arg_nfs, &reqdata->svc,
 					       reqdata->res_nfs);
 
@@ -1710,7 +1716,7 @@ enum xprt_stat nfs_rpc_valid_NFS(struct svc_req *req)
 	if (req->rq_msg.cb_vers == NFS_V4 && NFS_options & CORE_OPTION_NFSV4) {
 		if (req->rq_msg.cb_proc <= NFSPROC4_COMPOUND) {
 			reqdata->funcdesc =
-				&nfs4_func_desc[req->rq_msg.cb_proc];
+				&nfs4_func_desc[req->rq_msg.cb_proc];	// nfs4_Compound or nfs4_null
 			return nfs_rpc_process_request(reqdata, false);
 		}
 		return nfs_rpc_noproc(reqdata);

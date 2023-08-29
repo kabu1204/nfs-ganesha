@@ -76,6 +76,25 @@ typedef enum io_direction__ {
 	IO_READ_PLUS = 2,	/*< Reading plus */
 } io_direction_t;
 
+/*
+	Async read call hierarchy:
+
+	Request thread:
+	nfs4_Compound()
+		=> data->req->rq_resume_cb = nfs4_compound_resume;
+		=> nfs4_op_read()
+			=> obj->read2(..., nfs4_read_cb, ...)
+				=> mdcache_read2()
+					=> nfs4_read_cb()
+						=> svc_resume() {submit to work pool}
+		
+	
+	The work pool of svc worker thread:
+	svc_resume_task()
+		=> nfs4_compound_resume()
+			=> nfs4_op_read_resume()
+				=> nfs4_complete_read()
+*/
 static enum nfs_req_result nfs4_complete_read(struct nfs4_read_data *data)
 {
 	struct fsal_io_arg *read_arg = &data->read_arg;

@@ -184,6 +184,7 @@ mdcache_fsal_create_export(struct fsal_module *sub_fsal, void *parse_node,
 	myself = gsh_calloc(1, sizeof(struct mdcache_fsal_export));
 	myself->name = gsh_concat(sub_fsal->name, "/MDC");
 
+	/* two stacked fsal exports shared the same export id */
 	fsal_export_init(&myself->mfe_exp);
 	mdcache_export_ops_init(&myself->mfe_exp.exp_ops);
 
@@ -225,6 +226,9 @@ mdcache_fsal_create_export(struct fsal_module *sub_fsal, void *parse_node,
 		     myself->mfe_exp.fsal->name,
 		     atomic_fetch_int32_t(&myself->mfe_exp.fsal->refcount));
 
+	/*
+		The op_ctx->fsal_export has been set to sub export in sub_fsal->m_ops.create_export()
+	*/
 	fsal_export_stack(op_ctx->fsal_export, &myself->mfe_exp);
 
 	status = dirmap_lru_init(myself);
@@ -340,6 +344,10 @@ mdcache_fsal_unload(struct fsal_module *fsal_hdl)
 	return retval;
 }
 
+/*
+	register the mdcache fsal_module
+	and initialize the handle_ops
+*/
 void mdcache_fsal_init(void)
 {
 	int retval;

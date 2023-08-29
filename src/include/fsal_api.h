@@ -601,6 +601,12 @@ struct fsal_ops {
  * private_export->pub.fsal = fsal_hdl;
  * @endcode
  *
+ * And set the current export with:
+ * 
+ * @code{.c}
+ * op_ctx->fsal_export = &myself->export;
+ * @endcode
+ *
  * @note This seems like something that fsal_attach_export should
  * do. -- ACE.
  *
