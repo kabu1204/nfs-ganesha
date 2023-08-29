@@ -1576,6 +1576,9 @@ mdcache_dirent_add(mdcache_entry_t *parent, const char *name,
 	new_dir_entry->name = new_dir_entry->name_buffer;
 	mdcache_key_dup(&new_dir_entry->ckey, &entry->fh_hk.key);
 
+	LogDebugAlt(COMPONENT_NFS_READDIR, COMPONENT_CACHE_INODE,
+		"Adding new dirent with name %s", name);
+
 	/* add to avl */
 	code = mdcache_avl_insert(parent, &new_dir_entry);
 	if (code < 0) {

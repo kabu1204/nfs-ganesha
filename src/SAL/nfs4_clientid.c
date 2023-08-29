@@ -464,7 +464,7 @@ uint64_t client_id_rbt_hash_func(hash_parameter_t *hparam,
  * @retval 1 if the keys are different.
  *
  */
-int compare_client_id(struct gsh_buffdesc *buff1, struct gsh_buffdesc *buff2)
+int mdc_hashkey_cmp(struct gsh_buffdesc *buff1, struct gsh_buffdesc *buff2)
 {
 	clientid4 cl1 = *((clientid4 *) (buff1->addr));
 	clientid4 cl2 = *((clientid4 *) (buff2->addr));
@@ -1249,7 +1249,7 @@ static hash_parameter_t cid_confirmed_hash_param = {
 	.hash_func_key = client_id_value_hash_func,
 	.hash_func_rbt = client_id_rbt_hash_func,
 	.hash_func_both = NULL,
-	.compare_key = compare_client_id,
+	.compare_key = mdc_hashkey_cmp,
 	.display_key = display_client_id_key,
 	.display_val = display_client_id_val,
 	.ht_name = "Confirmed Client ID",
@@ -1262,7 +1262,7 @@ static hash_parameter_t cid_unconfirmed_hash_param = {
 	.hash_func_key = client_id_value_hash_func,
 	.hash_func_rbt = client_id_rbt_hash_func,
 	.hash_func_both = NULL,
-	.compare_key = compare_client_id,
+	.compare_key = mdc_hashkey_cmp,
 	.display_key = display_client_id_key,
 	.display_val = display_client_id_val,
 	.ht_name = "Unconfirmed Client ID",

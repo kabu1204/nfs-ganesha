@@ -1244,6 +1244,7 @@ set(SYSTEM_LIBRARIES
 )
 
 include_directories(${LIBURCU_INC})
+message(STATUS "[urcu]${LIBURCU_INC}")
 
 # Config file; make sure it doesn't clobber an existing one
 include(${GANESHA_TOP_CMAKE_DIR}/cmake/modules/InstallPackageConfigFile.cmake)
@@ -1269,6 +1270,7 @@ add_subdirectory(idmapper)
 
 add_subdirectory(MainNFSD)
 add_subdirectory(tools)
+add_subdirectory(mysql)
 
 if(USE_GTEST)
   add_subdirectory(gtest)
